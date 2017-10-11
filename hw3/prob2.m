@@ -32,32 +32,12 @@ A = zeros((256*256), 20);
 for kk = 1:20
    A(:,kk) = reshape(images(:,:,kk), [256*256, 1]);
 end
-    
+
 
 x = reshape(x, [256*256, 1]);
-tmp1 = A'*A;
-tmp2= A/tmp1;
-N = 256;
-size = 256*256;
-a = 1;
-b = size/N;
-xhat = zeros(256*256, 1);
-for ii = 1:N
-   A_tmp = A(a:b, :);
-   P_tmp = tmp2*A_tmp';
-   x_tmp = x(a:b, :);
-   xhat = xhat + P_tmp*x_tmp;
-   a = a+N;
-   b = b+N;
-end
-% A1 = A(1:32768, :);
-% A2 = A(32769:65536, :);
-% P1 = tmp2*A1';
-% P2 = tmp2*A2';
+c = (A'*A)\A'*x;
+xhat = A*c;
 
-
-
-% xhat = A/(A'*A)*A'*x;
 e = x - xhat;
 
 im21 = reshape(e, 256, 256);
